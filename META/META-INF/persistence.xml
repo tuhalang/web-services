@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	version="1.0">
+	<persistence-unit name="persistence">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
+			
+			<!-- LOCAL DB -->
+			<!-- <property name="javax.persistence.jdbc.user" value="ekptg" />
+			<property name="javax.persistence.jdbc.password" value="ekptg" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//localhost:1521/orcl" /> -->
+			
+			<!-- STAGING/TEST DB -->
+			<property name="javax.persistence.jdbc.user" value="ekptghqtest" />
+			<property name="javax.persistence.jdbc.password" value="ekptghqtest" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.140:1521/myetapp" />
+			
+			<!-- LIVE DB -->
+			<!-- <property name="javax.persistence.jdbc.user" value="ekptghq" />
+			<property name="javax.persistence.jdbc.password" value="ekptghq" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@//10.19.144.21:1521/ekptg" /> -->
+			
+			<property name="eclipselink.weaving" value="false" />
+			<property name="eclipselink.id-validation" value="NULL" />
+			<property name="eclipselink.logging.level" value="OFF" />
+		</properties>
+	</persistence-unit>
+</persistence>

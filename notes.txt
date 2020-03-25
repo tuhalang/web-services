@@ -1,0 +1,19 @@
+java -jar myetappws.jar
+
+#sample
+wsimport -keep http://www.etapp.gov.my/myetapp/services?wsdl
+
+-Xms512m
+-Xmx58432m
+-XX:MaxPermSize=5024m
+
+===MT
+http://sit-ws.kehakiman.gov.my/sit/etapp?wsdl
+
+==GIS
+http://geo.fortiddns.com/WebGIS-SOAP/spatialsoap.php?wsdl
+
+==ETANAH - MELAKA
+http://etanah.melaka.gov.my/etanahwsa/EtappPesakaService?wsdl
+http://etanah.melaka.gov.my/etanahwsa/EtappHasilPersekutuanService?wsdl
+http://etanah.melaka.gov.my/etanahwsa/EtappPengambilanService?wsdl
