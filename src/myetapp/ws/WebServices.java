@@ -13,7 +13,8 @@ import myetapp.entities.gis.Tanah;
 import myetapp.entities.mt.Document;
 import myetapp.entities.mt.Holder;
 import myetapp.entities.mt.Kaveat;
-import myetapp.entities.mt.Registration;
+import myetapp.integrasi.etanah.Permohonan;
+import myetapp.integrasi.etanah.TanahApplicationResponse;
 import myetapp.integrasi.etanah.kl.EtanahApplicationResponse;
 import myetapp.integrasi.etanah.kl.ListData;
 import myetapp.integrasi.insolvensi.InsApplicationResponse;
@@ -94,6 +95,13 @@ public interface WebServices {
 			@WebParam(name = "noFail") String noFail,
 			@WebParam(name = "noJilid") String noJilid,
 			@WebParam(name = "listData") ListData listData);
+	
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateEndorsan(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
 
 
 }

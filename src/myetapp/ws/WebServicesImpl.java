@@ -10,6 +10,9 @@ import myetapp.entities.mt.Document;
 import myetapp.entities.mt.Holder;
 import myetapp.entities.mt.Kaveat;
 import myetapp.entities.mt.Registration;
+import myetapp.integrasi.etanah.Permohonan;
+import myetapp.integrasi.etanah.TanahApplicationResponse;
+import myetapp.integrasi.etanah.TanahMelakaManager;
 import myetapp.integrasi.etanah.kl.EtanahApplicationResponse;
 import myetapp.integrasi.etanah.kl.EtanahManager;
 import myetapp.integrasi.etanah.kl.ListData;
@@ -295,5 +298,27 @@ public class WebServicesImpl implements WebServices {
 		return result;
 	
 	}
+	/**
+	 * 2020/04/13
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateEndorsan(String username
+		,String password, String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			result = TanahMelakaManager.UpdateEndorsan(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	
 
 }
