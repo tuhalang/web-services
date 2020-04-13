@@ -237,8 +237,9 @@ public class MailSMTP {
 		// String mailCc, String mailSubject, String mailText)
 		try {
 			MailSMTP obj = new MailSMTP();
-			obj.setEmail("myetapp2017@gmail.com", "etapp2017",
-					"azhadi76@gmail.com", "", "Email Test Subject",
+			//obj.setEmail("myetapp2017@gmail.com", "etapp2017",
+				obj.setEmail("etapp.pla@gmail.com", "etapp123",
+					"roslizakaria@gmail.com", "", "Email Test Subject",
 					"Test Mail Content");
 		} catch (MessagingException e) {
 			// TODO Auto-generated catch block
