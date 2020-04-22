@@ -16,6 +16,7 @@ public class Permohonan {
 	public String tarikh;
 	public String catatan;
 	public String jenis;
+	public String keputusan;
 
 	@XmlTransient
 	public List<Hakmilik> getListHakmilik() {
@@ -57,7 +58,13 @@ public class Permohonan {
 	public String getJenis() {
 		return jenis;
 	}
-
+	/**
+	 * A = MMK (SEK4); B = BORANG B/ WARTA;
+	 * C = MMK (SEK*); D = BORANG D/WARTA;
+	 * K = BORANG K; PD=PENARIKANBALIK BORANG D/WARTA;
+	 * S = SIJIL PEMBEBASAN UKUR, PU = PERMOHONAN UKUR;
+	 * @param jenis
+	 */
 	public void setJenis(String jenis) {
 		this.jenis = jenis;
 	}
@@ -69,6 +76,15 @@ public class Permohonan {
 
 	public void setTarikh(String tarikh) {
 		this.tarikh = tarikh;
+	}
+	
+	@XmlTransient
+	public String getKeputusan() {
+		return keputusan;
+	}
+
+	public void setKeputusan(String keputusan) {
+		this.keputusan = keputusan;
 	}
 
 	
