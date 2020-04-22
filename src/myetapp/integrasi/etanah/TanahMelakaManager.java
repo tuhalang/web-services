@@ -267,7 +267,7 @@ public class TanahMelakaManager {
 			result.setCode("1");
 			result.setDescription("Failed.");
 			//
-			if(permohonan.getTarikh()==null){
+			if(permohonan.getTarikh()!=null){
 				
 				if (getSek8().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 					result.setCode("0");
