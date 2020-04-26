@@ -19,11 +19,16 @@ public class TanahMelakaManager {
 	static Logger myLog = Logger.getLogger("myetapp.integrasi.etanah.TanahMelakaManager");
 	public static String idPermohonan = "";
 	public static String idTransaksi = "";
-	private static Integration iSek4 =null;
-	private static Integration iSek8 =null;
 	private static Integration iBorangB =null;
 	private static Integration iBorangD =null;
 	private static Integration iBorangK =null;
+	private static Integration immk =null;
+	private static Integration iPenarikan =null;
+	private static Integration iPU =null;
+	private static Integration iSek4 =null;
+	private static Integration iSek8 =null;
+	private static Integration iSijil =null;
+	TanahApplicationResponse result = null;
 	
 	public static TanahApplicationResponse UpdateEndorsan(String idpermohonan,Permohonan listData) {
 		TanahApplicationResponse result = new TanahApplicationResponse();
@@ -34,7 +39,6 @@ public class TanahMelakaManager {
 				if (checkExistPermohonanID(idTransaksi)) {
 					
 					if (listData.getJenis() != null && listData.getJenis().length() > 0 && !listData.getJenis().trim().equals("?")) {
-
 						result = kemaskiniPermohonan(listData);
 
 //					if (updateEndorsan(idPermohonan, listData)) {
@@ -73,6 +77,57 @@ public class TanahMelakaManager {
 		return result;
 		
 	}	
+	
+	
+	public static TanahApplicationResponse kemaskiniBorangA(String idpermohonan,Permohonan permohonan) {
+		TanahApplicationResponse result = new TanahApplicationResponse();
+		setResult(result);
+		
+		try {
+			if (idpermohonan != null && idpermohonan.trim().length() > 0 && !idpermohonan.trim().equals("?")) {
+				idTransaksi = idpermohonan;
+				
+				if (checkExistPermohonanID(idTransaksi)) {
+					
+					if(permohonan.getJenis().equals("A")){	
+						result = getSek4().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("B")){
+						result = getB().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("C")){
+						result = getSek8().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("D")){
+						result = getD().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("K")){
+						result = getK().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("PD")){
+						result = getPen().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("S")){
+						result = getSijil().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("PU")){
+						result = getPU().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}else if(permohonan.getJenis().equals("M2")){
+						result = getMMK().semakanPermohonan(idpermohonan, idTransaksi, permohonan);
+					}
+					
+				} else {
+//					result.setCode("1");
+//					result.setDescription("Failed.");
+					result.setDetail("Id Permohonan not found.");
+
+				}
+			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+				result.setDetail("Transaction ID is null.");
+			}
+		} catch (Exception ex) {
+//			result.setCode("1");
+//			result.setDescription("Failed.");
+			result.setDetail(ex.getMessage());
+		}
+		return result;
+		
+	}
 
 	private static boolean checkExistPermohonanID(String transactionID) throws Exception {
 		boolean recordExist = false;
@@ -99,78 +154,11 @@ public class TanahMelakaManager {
 		return recordExist;
 	}
 	
-	private static boolean updateEndorsan(String transactionID, Permohonan permohonan) throws Exception {
-		boolean updateRecord = false;
-		Connection con = null;
-		String sql = "";
-		
-		try {
-			con = DbManager.getInstance().getConnection();
-			con.setAutoCommit(false);
-			Statement stmt = con.createStatement();
-
-			//UPDATE INT_PPTPERMOHONAN
-			sql = "UPDATE TBLINTANAHPERMOHONAN SET "+
-				" NO_JILID = '" + permohonan.getNoJilid() + "'" +
-				" , TARIKH_TERIMA = SYSDATE" +
-				" , FLAG_ENDORSAN = 'Y' " +
-				" WHERE NO_PERMOHONAN = '" + transactionID + "'";
-			stmt.execute(sql);
-			
-			for (int i = 0; i < permohonan.getListHakmilik().size(); i++) {
-				Hakmilik hakmilik = permohonan.getListHakmilik().get(i);
-				
-				if (!hakmilik.getIdHakmilik().equals("?")) {
-					sql = "INSERT INTO TBLINTANAHPERMOHONANMILIKEND ("
-							+ " NO_PERMOHONAN, ID_HAKMILIK, ID_HAKMILIK_SAMBUNGAN, KOD_NEGERI, KOD_DAERAH," 
-							+ " KOD_MUKIM, KOD_HAKMILIK, NO_HAKMILIK, KOD_LOT, NO_LOT, NO_SEKSYEN,"
-							+ " KOD_LUAS_SAMBUNGAN, LUAS_SAMBUNGAN, NO_PERSERAHAN, TARIKH_ENDORSAN, MASA_ENDORSAN)"
-							+ " VALUES ("
-							+ " '" + transactionID + "','" + hakmilik.getIdHakmilik() + "','" + hakmilik.getIdHakmilikSambungan() + "','" + hakmilik.getKodNegeri() + "','" + hakmilik.getKodDaerah() + "',"
-							+ " '" + hakmilik.getKodMukim() + "','" + hakmilik.getKodHakmilik() + "','" + hakmilik.getNoHakmilik() + "','" + hakmilik.getKodLot() + "','" + hakmilik.getNoLot() + "','" + hakmilik.getNoSeksyen() + "',"
-							+ " '" + hakmilik.getKodLuasSambungan() + "','" + hakmilik.getLuasSambungan() + "','" + hakmilik.getNoPerserahan() + "','" + hakmilik.getTarikhEndorsan() + "','" + hakmilik.getMasaEndorsan() + "')";
-					stmt.execute(sql);
-				}				
-			}
-			
-			for (int j = 0; j < permohonan.getListDokumen().size(); j++) {
-				Dokumen dokumen = permohonan.getListDokumen().get(j);
-				
-				if (!dokumen.getFlagDokumen().equals("?")) {
-					byte[] decodedBytes;
-					decodedBytes = new BASE64Decoder().decodeBuffer(dokumen.getDocContent());
-					
-					PreparedStatement ps = con
-							.prepareStatement("INSERT INTO INT_PPTDOKUMENENDORSAN "
-									+ " (ID_RUJUKAN, FLAG_DOKUMEN, NAMA_DOKUMEN, CONTENT)"
-									+ "VALUES(?,?,?,?)");
-
-					ps.setString(1, transactionID);
-					ps.setString(2, dokumen.getFlagDokumen());
-					ps.setString(3, dokumen.getNamaDokumen());
-					ps.setBytes(4, decodedBytes);
-					ps.executeUpdate();
-				}				
-			}
-			
-			con.commit();
-			updateRecord = true;
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw ex;
-		}  finally {
-			if (con != null)
-				con.close();
-		}
-		
-		return updateRecord;
-	}
-	
 	public static TanahApplicationResponse kemaskiniPermohonan(Permohonan permohonan) throws Exception {
 		TanahApplicationResponse result = new TanahApplicationResponse();
 		
 		if(permohonan.getJenis().equals("A")){	
-			if (getSek4().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
 				result.setDetail("Update MMK (sek4) Success.");
@@ -182,7 +170,7 @@ public class TanahMelakaManager {
 				
 			}
 		}else if(permohonan.getJenis().equals("B")){
-			if (getSek4().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
 				result.setDetail("Update MMK (sek4) Success.");
@@ -194,7 +182,7 @@ public class TanahMelakaManager {
 				
 			}	
 		}else if(permohonan.getJenis().equals("C")){
-			if (getSek4().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 			//if (updateEndorsan(idPermohonan, permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
@@ -235,7 +223,7 @@ public class TanahMelakaManager {
 			}
 
 		}else if(permohonan.getJenis().equals("PD")){
-			if (getSek4().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 			//if (updateEndorsan(idPermohonan, permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
@@ -267,7 +255,7 @@ public class TanahMelakaManager {
 			result.setCode("1");
 			result.setDescription("Failed.");
 			//
-			if(permohonan.getTarikh()!=null){
+			if(permohonan.geTarikh()!=null){
 				
 				if (getSek8().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
 					result.setCode("0");
@@ -296,6 +284,38 @@ public class TanahMelakaManager {
 		
 	}
 	
+	private static void setResult(TanahApplicationResponse result){
+		//result = new TanahApplicationResponse();
+		result.setCode("1");
+		result.setDescription("Failed.");
+		//return result;
+	
+	}
+	
+	private static Integration getPen(){
+		if(iPenarikan==null){
+			iPenarikan = new PenarikanBean();
+		}
+		return iPenarikan;
+				
+	}
+	
+	private static Integration getSijil(){
+		if(iSijil==null){
+			iSijil = new SijilBean();
+		}
+		return iSijil;
+				
+	}
+	
+	private static Integration getPU(){
+		if(iPU==null){
+			iPU = new PUBean();
+		}
+		return iPU;
+				
+	}
+	
 	private static Integration getSek8(){
 		if(iSek8==null){
 			iSek8 = new Sek8Bean();
@@ -303,11 +323,11 @@ public class TanahMelakaManager {
 		return iSek8;
 				
 	}
-	private static Integration getSek4(){
-		if(iSek4==null){
-			iSek4 = new MMKSek4Bean();
+	private static Integration getMMK(){
+		if(immk==null){
+			immk = new MMKBean();
 		}
-		return iSek4;
+		return immk;
 				
 	}
 	private static Integration getB(){
@@ -331,13 +351,13 @@ public class TanahMelakaManager {
 		return iBorangK;
 				
 	}
-//	private static Integration getSek4(){
-//		if(iSek4==null){
-//			iSek4 = new MMKSek4Bean();
-//		}
-//		return iSek4;
-//				
-//	}
+	private static Integration getSek4(){
+		if(iSek4==null){
+			iSek4 = new Sek4Bean();
+		}
+		return iSek4;
+				
+	}
 	
 
 }

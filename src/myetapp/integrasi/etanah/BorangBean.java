@@ -24,7 +24,46 @@ public class BorangBean implements Integration {
 	//private Db db = null;
 	private Connection con = null;		
 	private String sql = "";
+	TanahApplicationResponse result = null;
 
+	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,  Permohonan permohonan) throws Exception {
+		result = new TanahApplicationResponse();
+		setResult(result);
+		//String noFail = permohonan.getNoFail();
+		//String noJilid = permohonan.getNoJilid();
+		String tarikh = permohonan.geTarikh();
+		//String keputusan = permohonan.getKeputusan();
+		String ulasan = permohonan.getCatatan();
+		/*
+		if (noFail == null || noFail.trim().length() == 0 || noFail.trim().equals("?")) {
+			result.setDetail("File No. Can't be Empty.");
+
+		} else if(noJilid == null || noJilid.trim().length() == 0 || noJilid.trim().equals("?")){
+			result.setDetail("Jilid No. Can't be Empty.");
+				
+		} else if(keputusan == null || keputusan.trim().length() == 0 || keputusan.trim().equals("?")){
+			result.setDetail("Keputusan Can't be Empty.");
+		}else */
+		if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
+			result.setDetail("Date Can't be Empty.");
+		
+		}else if(ulasan == null || ulasan.trim().length() == 0 || ulasan.trim().equals("?")){	
+			result.setDetail("Ulasan Can't be Empty.");
+		}else{		
+			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
+				result.setCode("0");
+				result.setDescription("Success.");
+				result.setDetail("Update Borang B Success.");
+				
+			} else {
+				result.setDetail("Update Borang B Failed.");
+
+			}
+		}
+		return  result;
+		
+	}
+	
 	@Override
 	public boolean kemaskiniPermohonan(String idPermohonan,String transactionID, Permohonan permohonan) throws Exception{
 		boolean isSucces = true;
@@ -40,7 +79,7 @@ public class BorangBean implements Integration {
 				" , TARIKH_TERIMA = SYSDATE" +
 				" , FLAG_ENDORSAN = 'Y' " +
 				" WHERE NO_PERMOHONAN = '" + transactionID + "'";
-			stmt.execute(sql);
+			//stmt.execute(sql);
 			
 			for (int i = 0; i < permohonan.getListHakmilik().size(); i++) {
 				Hakmilik hakmilik = permohonan.getListHakmilik().get(i);
@@ -78,7 +117,7 @@ public class BorangBean implements Integration {
 				}				
 			}
 			
-			kemaskiniMMK(idPermohonan,permohonan,stmt);
+			kemaskiniPermohonani(idPermohonan,permohonan,stmt);
 
 			con.commit();
 			isSucces = true;
@@ -94,48 +133,20 @@ public class BorangBean implements Integration {
 		
 	}
 	
-	private String getMMK(String idPermohonan) throws Exception {
-		boolean recordExist = false;
-		Connection con = null;
-		String idMMK = "";
-		try {
-			con = DbManager.getInstance().getConnection();
-			Statement stmt = con.createStatement();
-			String sql = "SELECT ID_MMK FROM tblpptmmk WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				recordExist = true;
-				idMMK =rs.getString("ID_MMK");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw ex;
-		}  finally {
-			if (con != null)
-				con.close();
-		}
+	public void kemaskiniPermohonani(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
+		 //String tarikhBukafail = "to_date('" + (String)data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
 		
-		return idMMK;
+		sql = "insert into tblintanahppt (tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
+			+" (to_date('"+permohonan.geTarikh()+"','dd/MM/yyyy'),'"+permohonan.getCatatan()+"','B',SYSDATE,SYSDATE) "
+			+"";
+		stmt.execute(sql);
+
 	}
 	
-	public void kemaskiniMMK(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
-		 //String tarikhBukafail = "to_date('" + (String)data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
-
-		sql = "update tblpptmmk set "
-			+ "no_rujmmk = "+permohonan.getTarikh()+""
-			+ ",tarikh_mmk = to_date('"+permohonan.getTarikh()+"','dd/MM/yyyy')"
-			+ " where id_permohonan='"+idPermohonan+"'"
-			+ "";
-		stmt.execute(sql);
-
-		sql = "update tblpptmmkkeputusan set "
-			+ " status_keputusan = "+permohonan.getKeputusan()+""
-			+ " ,ulasan = '"+permohonan.getCatatan()+"'"
-			+ " ,tarikh_terima = SYSDATE "
-			+ " where id_mmk='"+getMMK(idPermohonan)+"'"
-			+ "";
-		stmt.execute(sql);
-
+	private static void setResult(TanahApplicationResponse result){
+		result.setCode("1");
+		result.setDescription("Failed.");
+	
 	}
 	
 }
