@@ -20,7 +20,6 @@ public class Permohonan {
 	public String tarikh;
 	public String tarikhKeputusan;
 	public String tarikhWarta;
-//	public String tarikhSijil;
 	public String catatan;
 	public String catatanKeputusan;
 	public String jenis;
@@ -118,7 +117,7 @@ public class Permohonan {
 	}
 
 	public void setNoRujukan(String noRujukan) {
-		this.noFail = noRujukan;
+		this.noRujukan = noRujukan;
 	}
 	
 	@XmlTransient
