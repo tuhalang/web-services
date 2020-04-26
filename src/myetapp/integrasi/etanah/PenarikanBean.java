@@ -20,14 +20,14 @@ public class PenarikanBean implements Integration {
 	private static ITanah iPer=null;
 	TanahApplicationResponse result = null;
 
-	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,  Permohonan permohonan) throws Exception {
+	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID, Permohonan permohonan) throws Exception {
 		result = new TanahApplicationResponse();
 		getPer().setResult(result);
 		//String noFail = permohonan.getNoFail();
 		//String noJilid = permohonan.getNoJilid();
-		String tarikh = permohonan.geTarikhKeputusan();
-		String keputusan = permohonan.getKeputusan();
-		String ulasan = permohonan.getCatatanKeputusan();
+		String tarikh = permohonan.getTarikhKeputusan();
+		//String keputusan = permohonan.getKeputusan();
+		//String ulasan = permohonan.getCatatanKeputusan();
 		/*
 		if (noFail == null || noFail.trim().length() == 0 || noFail.trim().equals("?")) {
 			result.setDetail("File No. Can't be Empty.");
@@ -111,12 +111,14 @@ public class PenarikanBean implements Integration {
 				}				
 			}
 			
-			sql = "insert into tblintanahppt (tarikh_keputusan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-					+" (to_date('"+permohonan.geTarikhKeputusan()+"','dd/MM/yyyy')" +
+			sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+					"values ("+
+					" '"+transactionID+"'" +
+					" ,to_date('"+permohonan.getTarikhKeputusan()+"','dd/MM/yyyy')" +
 					",'"+permohonan.getKeputusan()+"'" +
 					",'"+permohonan.getCatatanKeputusan()+"'" +
-					",'PD',SYSDATE,SYSDATE) "
-					+"";
+					",'PD',SYSDATE,SYSDATE "+
+					")";
 
 			getPer().kemaskiniPermohonani(sql, stmt);
 

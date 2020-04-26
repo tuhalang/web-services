@@ -2,14 +2,9 @@ package myetapp.integrasi.etanah;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Hashtable;
-import java.util.Vector;
+//import java.text.SimpleDateFormat;
 
-import lebah.db.Db;
-import lebah.db.SQLRenderer;
 import myetapp.db.DbManager;
 import myetapp.entities.etanah.Dokumen;
 import myetapp.entities.etanah.Hakmilik;
@@ -20,8 +15,7 @@ import org.apache.log4j.Logger;
 
 public class BorangDBean implements Integration {
 	private static Logger myLog = Logger.getLogger(BorangDBean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
-	//private Db db = null;
+	//private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	private Connection con = null;		
 	private String sql = "";
 	TanahApplicationResponse result = null;
@@ -31,13 +25,13 @@ public class BorangDBean implements Integration {
 		result = new TanahApplicationResponse();
 		setResult(result);
 		String noFail = permohonan.getNoWarta();
-		String tarikh = permohonan.geTarikhWarta();
+		String tarikh = permohonan.getTarikhWarta();
 //		String ulasan = permohonan.getCatatan();
 		
 		if (noFail == null || noFail.trim().length() == 0 || noFail.trim().equals("?")) {
-			result.setDetail("Warta No. Can't be Empty.");
+			result.setDetail("Sila Isi No.  Warta.");
 		}else if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail("Sila Isi Tarikh Warta.");
 		}else{		
 			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
 				result.setCode("0");
@@ -105,7 +99,7 @@ public class BorangDBean implements Integration {
 				}				
 			}
 			
-			kemaskiniPermohonani(idPermohonan,permohonan,stmt);
+			kemaskiniPermohonani(transactionID,permohonan,stmt);
 
 			con.commit();
 			isSucces = true;
@@ -121,14 +115,15 @@ public class BorangDBean implements Integration {
 		
 	}
 	
-	public void kemaskiniPermohonani(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
-		 //String tarikhBukafail = "to_date('" + (String)data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
-		sql = "insert into tblintanahppt (tarikh_endorsan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-				+" (to_date('"+permohonan.geTarikhWarta()+"','dd/MM/yyyy')" +
-				",'"+permohonan.getNoWarta()+"'" +
-				",'"+permohonan.getCatatan()+"'" +
-				",'D',SYSDATE,SYSDATE) "
-				+"";
+	public void kemaskiniPermohonani(String noPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
+		sql = "insert into tblintanahppt (no_permohonan,tarikh_endorsan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+				" values ("+
+				" '"+noPermohonan+"'" +
+				" ,to_date('"+permohonan.getTarikhWarta()+"','dd/MM/yyyy')" +
+				" ,'"+permohonan.getNoWarta()+"'" +
+				" ,'"+permohonan.getCatatan()+"'" +
+				" ,'D',SYSDATE,SYSDATE "+
+				")";
 
 		myLog.info("sql2="+sql);
 		stmt.execute(sql);

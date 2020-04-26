@@ -4,47 +4,44 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Hashtable;
-import java.util.Vector;
+//import java.text.SimpleDateFormat;
 
-import lebah.db.Db;
-import lebah.db.SQLRenderer;
 import myetapp.db.DbManager;
 import myetapp.entities.etanah.Dokumen;
 import myetapp.entities.etanah.Hakmilik;
 import myetapp.integrasi.Integration;
 import sun.misc.BASE64Decoder;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 public class MMKBean implements Integration {
-	private static Logger myLog = Logger.getLogger(MMKBean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
+	//private static Logger myLog = Logger.getLogger(MMKBean.class);
+	//private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	//private Db db = null;
+	private String noPermohonan = "";
 	private Connection con = null;		
 	private String sql = "";
 
 	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,  Permohonan permohonan) throws Exception {
 		TanahApplicationResponse result = new TanahApplicationResponse();
 		
-		String tarikh = permohonan.geTarikhKeputusan();
+		String tarikh = permohonan.getTarikhKeputusan();
 		String rujukan = permohonan.getNoRujukan();
-		String keputusan = permohonan.getKeputusan();
+		//String keputusan = permohonan.getKeputusan();
 		String ulasan = permohonan.getCatatanKeputusan();
-		
+		noPermohonan = transactionID;
 		if (rujukan == null || rujukan.trim().length() == 0 || rujukan.trim().equals("?")) {
-			result.setDetail("Reference No. Can't be Empty.");
+			result.setDetail("Sila Isi No. Rujukan .");
 //		} else if(noJilid == null || noJilid.trim().length() == 0 || noJilid.trim().equals("?")){
 //			result.setDetail("Jilid No. Can't be Empty.");
 				
 //		} else if(keputusan == null || keputusan.trim().length() == 0 || keputusan.trim().equals("?")){
 //			result.setDetail("Keputusan Can't be Empty.");
 		}else if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail("Sila Isi Tarikh Keputusan.");
 		
 		}else if(ulasan == null || ulasan.trim().length() == 0 || ulasan.trim().equals("?")){	
-			result.setDetail("Desc Can't be Empty.");
+			result.setDetail("Sila Isi Catatan Keputusan.");
 		}else{	
 			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
 				result.setCode("0");
@@ -154,26 +151,29 @@ public class MMKBean implements Integration {
 	}
 	
 	public void kemaskiniMMK(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
-		 //String tarikhBukafail = "to_date('" + (String)data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
 
 		sql = "update tblpptmmk set "
-			+ "no_rujmmk = "+permohonan.getNoRujukan()+""
-			+ ",tarikh_mmk = to_date('"+permohonan.geTarikhKeputusan()+"','dd/MM/yyyy')"
+			+ "no_rujmmk = '"+permohonan.getNoRujukan()+"'"
+			+ ",tarikh_mmk = to_date('"+permohonan.getTarikhKeputusan()+"','dd/MM/yyyy')"
 			+ " where id_permohonan='"+idPermohonan+"'"
 			+ "";
 		stmt.execute(sql);
 
 		sql = "update tblpptmmkkeputusan set "
-			+ " status_keputusan = "+permohonan.getKeputusan()+""
+			+ " status_keputusan = '"+permohonan.getKeputusan()+"'"
 			+ " ,ulasan = '"+permohonan.getCatatan()+"'"
 			+ " ,tarikh_terima = SYSDATE "
 			+ " where id_mmk='"+getMMK(idPermohonan)+"'"
 			+ "";
 		stmt.execute(sql);
 		
-		sql = "insert into tblintanahppt (tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-				+" (to_date('"+permohonan.geTarikhKeputusan()+"','dd/MM/yyyy'),'"+permohonan.getCatatanKeputusan()+"','K',SYSDATE,SYSDATE) "
-				+"";
+		sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+				"values ("+
+				" '"+noPermohonan+"'" +
+				" ,to_date('"+permohonan.getTarikhKeputusan()+"','dd/MM/yyyy')" +
+				" ,'"+permohonan.getCatatanKeputusan()+"'" +
+				" ,'M2',SYSDATE,SYSDATE "+
+				")";
 		stmt.execute(sql);
 
 	}

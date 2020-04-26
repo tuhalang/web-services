@@ -2,14 +2,8 @@ package myetapp.integrasi.etanah;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import lebah.db.Db;
-import lebah.db.SQLRenderer;
+//import java.text.SimpleDateFormat;
 import myetapp.db.DbManager;
 import myetapp.entities.etanah.Dokumen;
 import myetapp.entities.etanah.Hakmilik;
@@ -20,7 +14,7 @@ import org.apache.log4j.Logger;
 
 public class BorangKBean implements Integration {
 	private static Logger myLog = Logger.getLogger(BorangKBean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
+	//private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	//private Db db = null;
 	private Connection con = null;		
 	private String sql = "";
@@ -31,14 +25,14 @@ public class BorangKBean implements Integration {
 		setResult(result);
 		//String noFail = permohonan.getNoFail();
 		String noWarta = permohonan.getNoWarta();
-		String tarikh = permohonan.geTarikhWarta();
+		String tarikh = permohonan.getTarikhWarta();
 		//String keputusan = permohonan.getKeputusan();
 		//String ulasan = permohonan.getCatatan();
 		
 		if (noWarta == null || noWarta.trim().length() == 0 || noWarta.trim().equals("?")) {
-			result.setDetail("Warta No. Can't be Empty.");
+			result.setDetail("Sila Isi No. Warta.");
 		}else if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail(" Sila Isi Tarikh Warta.");
 		
 //		}else if(ulasan == null || ulasan.trim().length() == 0 || ulasan.trim().equals("?")){	
 //			result.setDetail("Ulasan Can't be Empty.");
@@ -46,10 +40,10 @@ public class BorangKBean implements Integration {
 			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
-				result.setDetail("Update Borang B Success.");
+				result.setDetail("Update Borang K Success.");
 				
 			} else {
-				result.setDetail("Update Borang B Failed.");
+				result.setDetail("Update Borang K Failed.");
 
 			}
 		}
@@ -110,7 +104,7 @@ public class BorangKBean implements Integration {
 				}				
 			}
 			
-			kemaskiniPermohonani(idPermohonan,permohonan,stmt);
+			kemaskiniPermohonani(transactionID,permohonan,stmt);
 
 			con.commit();
 			isSucces = true;
@@ -126,13 +120,15 @@ public class BorangKBean implements Integration {
 		
 	}
 	
-	public void kemaskiniPermohonani(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
-		sql = "insert into tblintanahppt (tarikh_keputusan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-				+" (to_date('"+permohonan.geTarikhWarta()+"','dd/MM/yyyy')" +
-				",'"+permohonan.getNoWarta()+"'" +
-				",'"+permohonan.getCatatan()+"'" +
-				",'K',SYSDATE,SYSDATE) "
-				+"";
+	public void kemaskiniPermohonani(String noPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
+		sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+				"values ("+
+				" '"+noPermohonan+"'" +
+				" ,to_date('"+permohonan.getTarikhWarta()+"','dd/MM/yyyy')" +
+				" ,'"+permohonan.getNoWarta()+"'" +
+				" ,'"+permohonan.getCatatan()+"'" +
+				" ,'K',SYSDATE,SYSDATE "+
+				")";
 
 		myLog.info("sql2="+sql);
 		stmt.execute(sql);

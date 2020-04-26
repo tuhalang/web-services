@@ -2,25 +2,19 @@ package myetapp.integrasi.etanah;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import lebah.db.Db;
-import lebah.db.SQLRenderer;
+//import java.text.SimpleDateFormat;
 import myetapp.db.DbManager;
 import myetapp.entities.etanah.Dokumen;
 import myetapp.entities.etanah.Hakmilik;
 import myetapp.integrasi.Integration;
 import sun.misc.BASE64Decoder;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 public class SijilBean implements Integration {
-	private static Logger myLog = Logger.getLogger(SijilBean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
+	//private static Logger myLog = Logger.getLogger(SijilBean.class);
+	//private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	//private Db db = null;
 	private Connection con = null;		
 	private String sql = "";
@@ -32,7 +26,7 @@ public class SijilBean implements Integration {
 		getPer().setResult(result);
 		//String noFail = permohonan.getNoFail();
 		//String noJilid = permohonan.getNoJilid();
-		String tarikh = permohonan.geTarikh();
+		String tarikh = permohonan.getTarikh();
 		//String keputusan = permohonan.getKeputusan();
 		String pu = permohonan.getNoPU();
 		/*
@@ -46,18 +40,18 @@ public class SijilBean implements Integration {
 			result.setDetail("Keputusan Can't be Empty.");
 		}else */
 		if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail("Sila Isi Tarikh.");
 		
 		}else if(pu == null || pu.trim().length() == 0 || pu.trim().equals("?")){	
-			result.setDetail("No. PU Can't be Empty.");
+			result.setDetail("Sila Isi No. PU");
 		}else{		
 			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
 				result.setCode("0");
 				result.setDescription("Success.");
-				result.setDetail("Update Permohonan Ukur Success.");
+				result.setDetail("Update Permohonan Pengecualian Ukur Success.");
 				
 			} else {
-				result.setDetail("Update Permohonan Ukur Failed.");
+				result.setDetail("Update Permohonan Pengecualian Ukur Failed.");
 
 			}
 		}
@@ -118,9 +112,13 @@ public class SijilBean implements Integration {
 				}				
 			}
 			
-			sql = "insert into tblintanahppt (tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-					+" (to_date('"+permohonan.geTarikh()+"','dd/MM/yyyy'),'"+permohonan.getNoPU()+"','PU',SYSDATE,SYSDATE) "
-					+"";
+			sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+					"values ("+
+					" '"+permohonan.getNoPU()+"'" +
+					" ,to_date('"+permohonan.getTarikh()+"','dd/MM/yyyy')" +
+					" ,'"+permohonan.getNoPU()+"'" +
+					",'S',SYSDATE,SYSDATE) "+
+					"";
 
 			getPer().kemaskiniPermohonani(sql, stmt);
 

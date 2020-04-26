@@ -42,6 +42,78 @@ public class Permohonan {
 	public void setListDokumen(List<Dokumen> listDokumen) {
 		this.listDokumen = listDokumen;
 	}
+//		
+	@XmlTransient
+	public String getNoFail() {
+		return noFail;
+	}
+
+	public void setNoFail(String noFail) {
+		this.noFail = noFail;
+	}
+	
+	@XmlTransient
+	public String getNoJilid() {
+		return noJilid;
+	}
+
+	public void setNoJilid(String noJilid) {
+		this.noJilid = noJilid;
+	}	
+
+	@XmlTransient
+	public String getNoPU() {
+		return noPU;
+	}
+
+	public void setNoPU(String noPU) {
+		this.noPU = noPU;
+	}
+//
+	@XmlTransient
+	public String getNoRujukan() {
+		return noRujukan;
+	}
+
+	public void setNoRujukan(String noRujukan) {
+		this.noRujukan = noRujukan;
+	}
+//	
+	@XmlTransient
+	public String getNoWarta() {
+		return noWarta;
+	}
+
+	public void setNoWarta(String noWarta) {
+		this.noWarta = noWarta;
+	}
+//
+	@XmlTransient
+	public String getTarikh() {
+		return tarikh;
+	}
+
+	public void setTarikh(String tarikh) {
+		this.tarikh = tarikh;
+	}
+//	
+	@XmlTransient
+	public String getTarikhKeputusan() {
+		return tarikhKeputusan;
+	}
+	
+	public void setTarikhKeputusan(String tarikhKeputusan) {
+		this.tarikhKeputusan = tarikhKeputusan;
+	}	
+	
+	@XmlTransient
+	public String getTarikhWarta() {
+		return tarikhWarta;
+	}
+
+	public void setTarikhWarta(String tarikhWarta) {
+		this.tarikhWarta = tarikhWarta;
+	}
 	
 	@XmlTransient
 	public String getCatatan() {
@@ -50,6 +122,15 @@ public class Permohonan {
 
 	public void setCatatan(String catatan) {
 		this.catatan = catatan;
+	}
+	
+	@XmlTransient
+	public String getCatatanKeputusan() {
+		return catatanKeputusan;
+	}
+
+	public void setCatatanKeputusan(String catatanKeputusan) {
+		this.catatanKeputusan = catatanKeputusan;
 	}
 	
 	@XmlTransient
@@ -68,15 +149,6 @@ public class Permohonan {
 	}
 	
 	@XmlTransient
-	public String geTarikh() {
-		return tarikh;
-	}
-
-	public void seTarikh(String tarikh) {
-		this.tarikh = tarikh;
-	}
-	
-	@XmlTransient
 	public String getKeputusan() {
 		return keputusan;
 	}
@@ -84,76 +156,8 @@ public class Permohonan {
 	public void setKeputusan(String keputusan) {
 		this.keputusan = keputusan;
 	}
-	@XmlTransient
-	public String getNoWarta() {
-		return noWarta;
-	}
-
-	public void setNoWarta(String noWarta) {
-		this.noWarta = noWarta;
-	}
-
-	@XmlTransient
-	public String getNoJilid() {
-		return noJilid;
-	}
-
-	public void setNoJilid(String noJilid) {
-		this.noJilid = noJilid;
-	}	
-
-	@XmlTransient
-	public String getNoPU() {
-		return noPU;
-	}
-
-	public void setNoPU(String noPU) {
-		this.noPU = noPU;
-	}
 	
-	@XmlTransient
-	public String getNoRujukan() {
-		return noRujukan;
-	}
-
-	public void setNoRujukan(String noRujukan) {
-		this.noRujukan = noRujukan;
-	}
 	
-	@XmlTransient
-	public String getNoFail() {
-		return noFail;
-	}
 
-	public void setNoFail(String noFail) {
-		this.noFail = noFail;
-	}
-	
-	@XmlTransient
-	public String geTarikhKeputusan() {
-		return tarikhKeputusan;
-	}
-
-	public void seTarikhKeputusan(String tarikhKeputusan) {
-		this.tarikhKeputusan = tarikhKeputusan;
-	}
-	
-	@XmlTransient
-	public String geTarikhWarta() {
-		return tarikhWarta;
-	}
-
-	public void seTarikhWarta(String tarikhWarta) {
-		this.tarikhWarta = tarikhWarta;
-	}
-
-	@XmlTransient
-	public String getCatatanKeputusan() {
-		return catatanKeputusan;
-	}
-
-	public void setCatatanKeputusan(String catatanKeputusan) {
-		this.catatanKeputusan = catatanKeputusan;
-	}
 	
 }

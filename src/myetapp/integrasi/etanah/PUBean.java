@@ -25,7 +25,7 @@ public class PUBean implements Integration {
 		getPer().setResult(result);
 		//String noFail = permohonan.getNoFail();
 		//String noJilid = permohonan.getNoJilid();
-		String tarikh = permohonan.geTarikh();
+		String tarikh = permohonan.getTarikh();
 		//String keputusan = permohonan.getKeputusan();
 		String rujukan = permohonan.getNoRujukan();
 		/*
@@ -39,10 +39,10 @@ public class PUBean implements Integration {
 			result.setDetail("Keputusan Can't be Empty.");
 		}else */
 		if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail("Sila Isi Tarikh");
 		
 		}else if(rujukan == null || rujukan.trim().length() == 0 || rujukan.trim().equals("?")){	
-			result.setDetail("No. rujukan Can't be Empty.");
+			result.setDetail("Sila Isi No. Rujukan.");
 		}else{		
 			if (kemaskiniPermohonan(idPermohonan,transactionID,permohonan)) {
 				result.setCode("0");
@@ -111,9 +111,13 @@ public class PUBean implements Integration {
 				}				
 			}
 			
-			sql = "insert into tblintanahppt (tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-					+" (to_date('"+permohonan.geTarikh()+"','dd/MM/yyyy'),'"+permohonan.getNoRujukan()+"','PU',SYSDATE,SYSDATE) "
-					+"";
+			sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+					"values ("+
+					"'"+transactionID+"'" +
+					" ,to_date('"+permohonan.getTarikh()+"','dd/MM/yyyy')" +
+					" ,'"+permohonan.getNoRujukan()+"'" +
+					" ,'PU',SYSDATE,SYSDATE "+
+					")";
 
 			getPer().kemaskiniPermohonani(sql, stmt);
 
