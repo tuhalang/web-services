@@ -30,7 +30,7 @@ public class WebServicesImpl implements WebServices {
 	static ResourceBundle rb = ResourceBundle.getBundle("ws");
 	String user = rb.getString("USERNAME");
 	String pwd = rb.getString("PASSWORD");
-	UpdateApplicationResponse result_;
+	UpdateApplicationResponse result;
 	
 	@Override
 	public UpdateApplicationResponse updateRegistration(String refID
@@ -41,14 +41,14 @@ public class WebServicesImpl implements WebServices {
 		,String remarks
 		,String roomNo
 		,String transactionID) {
-		result_ = new UpdateApplicationResponse();
+		result = new UpdateApplicationResponse();
 		
 		if (username.equals(user) && password.equals(pwd)) {
 			if (transactionID.isEmpty()) {
-				result_ = new UpdateApplicationResponse();
-				result_.setCode("1");
-				result_.setDescription("Invalid parameter");
-				result_.setDetail("Transaction ID is required.");
+				result = new UpdateApplicationResponse();
+				result.setCode("1");
+				result.setDescription("Invalid parameter");
+				result.setDetail("Transaction ID is required.");
 				
 			} else {
 				Registration requestObj = new Registration();
@@ -60,28 +60,28 @@ public class WebServicesImpl implements WebServices {
 				requestObj.setRemarks(remarks);
 				requestObj.setRoom(roomNo);
 				requestObj.setTransactionID(transactionID);
-				result_ = MTPendaftaran.updateRegistrationCase(requestObj);
+				result = MTPendaftaran.updateRegistrationCase(requestObj);
 				
 			}
 		
 		} else {
-			result_ = new UpdateApplicationResponse();
-			result_.setCode("1");
-			result_.setDescription("Invalid Credentials");
-			result_.setDetail("Invalid Credentials");
+			result = new UpdateApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("Invalid Credentials");
 		
 		}		
 		
 		String flagSuccess = "";
-		if (result_.getCode().equals("0")) {
+		if (result.getCode().equals("0")) {
 			flagSuccess = "Y";
 		} else {
 			flagSuccess = "T";
 		}
 		
-		IntLogManager.recordLogMT(refID, "C", "I", flagSuccess, result_.getDetail());
+		IntLogManager.recordLogMT(refID, "C", "I", flagSuccess, result.getDetail());
 		
-		return result_;
+		return result;
 	
 	}
 	
@@ -299,7 +299,7 @@ public class WebServicesImpl implements WebServices {
 	
 	}
 	/**
-	 * 2020/04/13
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
 	 * */
 	@Override
 	public TanahApplicationResponse eTanahPPTUpdateEndorsan(String username
@@ -309,6 +309,213 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			result = TanahMelakaManager.UpdateEndorsan(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Makluman Permohonan Ukur
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdatePU(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("PU");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Makluman Sijil Pembebasan Ukur
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateCert(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("S");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Penarikan (Borang D)
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdatePenarikan(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("PD");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Borang K
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateFormK(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("K");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Borang D
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateFormD(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("D");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Maklumat Keputusan MMK
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateMMK(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("M2");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Borang C
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateFormC(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("C");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Borang B
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateFormB(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("B");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+		} else {
+			result = new TanahApplicationResponse();
+			result.setCode("1");
+			result.setDescription("Invalid Credentials");
+			result.setDetail("");
+		
+		}
+		return result;
+	
+	}
+	/**
+	 * 2020/04/13 Integrasi e-TANAH (PPT)
+	 * Borang A
+	 * */
+	@Override
+	public TanahApplicationResponse eTanahPPTUpdateFormA(String username,String password
+		,String idPermohonan, Permohonan permohonan) {
+		TanahApplicationResponse result;
+
+		result = new TanahApplicationResponse();
+		if (username.equals(user) && password.equals(pwd)) {
+			permohonan.setJenis("A");
+			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");

@@ -98,7 +98,65 @@ public interface WebServices {
 	
 	@WebMethod
 	@WebResult(name = "TanahApplicationResponse")
-	TanahApplicationResponse eTanahPPTUpdateEndorsan(@WebParam(name = "username") String username
+	UpdateApplicationResponse eTanahPPTUpdateEndorsan(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdatePU(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateCert(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdatePenarikan(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateFormK(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateFormD(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateMMK(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateFormC(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateFormB(@WebParam(name = "username") String username
+			,@WebParam(name = "password") String password
+			,@WebParam(name = "idPermohonan") String idPermohonan
+			,@WebParam(name = "permohonan") Permohonan permohonan);
+	@WebMethod
+	@WebResult(name = "TanahApplicationResponse")
+	TanahApplicationResponse eTanahPPTUpdateFormA(@WebParam(name = "username") String username
 			,@WebParam(name = "password") String password
 			,@WebParam(name = "idPermohonan") String idPermohonan
 			,@WebParam(name = "permohonan") Permohonan permohonan);
