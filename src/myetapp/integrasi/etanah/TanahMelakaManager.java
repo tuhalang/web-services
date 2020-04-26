@@ -1,18 +1,18 @@
 package myetapp.integrasi.etanah;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
+//import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
 import myetapp.db.DbManager;
-import myetapp.entities.etanah.Dokumen;
-import myetapp.entities.etanah.Hakmilik;
+//import myetapp.entities.etanah.Dokumen;
+//import myetapp.entities.etanah.Hakmilik;
 import myetapp.integrasi.Integration;
 
 import org.apache.log4j.Logger;
 
-import sun.misc.BASE64Decoder;
+//import sun.misc.BASE64Decoder;
 
 public class TanahMelakaManager {
 
@@ -38,8 +38,8 @@ public class TanahMelakaManager {
 				
 				if (checkExistPermohonanID(idTransaksi)) {
 					
-					if (listData.getJenis() != null && listData.getJenis().length() > 0 && !listData.getJenis().trim().equals("?")) {
-						result = kemaskiniPermohonan(listData);
+					//if (listData.getJenis() != null && listData.getJenis().length() > 0 && !listData.getJenis().trim().equals("?")) {
+					//	result = kemaskiniPermohonan(listData);
 
 //					if (updateEndorsan(idPermohonan, listData)) {
 //						result.setCode("0");
@@ -51,12 +51,12 @@ public class TanahMelakaManager {
 //						result.setDetail("Update Endorsan Failed.");
 //					}
 
-					}else {
+					//}else {
 						result.setCode("1");
 						result.setDescription("Failed.");
 						result.setDetail("Jenis not found.");
 						
-					}
+					//}
 					
 				} else {
 					result.setCode("1");
@@ -79,7 +79,7 @@ public class TanahMelakaManager {
 	}	
 	
 	
-	public static TanahApplicationResponse kemaskiniBorangA(String idpermohonan,Permohonan permohonan) {
+	public static TanahApplicationResponse kemaskiniBorang(String idpermohonan,Permohonan permohonan) {
 		TanahApplicationResponse result = new TanahApplicationResponse();
 		setResult(result);
 		
@@ -157,129 +157,129 @@ public class TanahMelakaManager {
 	public static TanahApplicationResponse kemaskiniPermohonan(Permohonan permohonan) throws Exception {
 		TanahApplicationResponse result = new TanahApplicationResponse();
 		
-		if(permohonan.getJenis().equals("A")){	
-			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update MMK (sek4) Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update MMK (sek4) Failed.");
-				
-			}
-		}else if(permohonan.getJenis().equals("B")){
-			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update MMK (sek4) Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update MMK (sek4) Failed.");
-				
-			}	
-		}else if(permohonan.getJenis().equals("C")){
-			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-			//if (updateEndorsan(idPermohonan, permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update MMK (sek8) Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update MMK (sek8) Failed.");
-				
-			}
-		}else if(permohonan.getJenis().equals("D")){
-			if (getD().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-			//if (updateEndorsan(idPermohonan, permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update Borang D Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update Borang D Failed.");
-				
-			}
-
-		}else if(permohonan.getJenis().equals("K")){
-			if (getK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-			//if (updateEndorsan(idPermohonan, permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update Borang K Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update Borang K Failed.");
-				
-			}
-
-		}else if(permohonan.getJenis().equals("PD")){
-			if (getMMK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-			//if (updateEndorsan(idPermohonan, permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update Penarikan Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update Penarikan Failed.");
-				
-			}
-
-		}else if(permohonan.getJenis().equals("S")){
-			if (getSek8().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-			//if (updateEndorsan(idPermohonan, permohonan)) {
-				result.setCode("0");
-				result.setDescription("Success.");
-				result.setDetail("Update Pengecualian Ukur Success.");
-				
-			} else {
-				result.setCode("1");
-				result.setDescription("Failed.");
-				result.setDetail("Update Pengecualian Failed.");
-				
-			}
-
-		}else if(permohonan.getJenis().equals("PU")){
-			
-			result.setCode("1");
-			result.setDescription("Failed.");
-			//
-			if(permohonan.geTarikh()!=null){
-				
-				if (getSek8().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
-					result.setCode("0");
-					result.setDescription("Success.");
-					result.setDetail("Update Permohonan Ukur Success.");
-				
-				}else{					
-					result.setDetail("Update Permohonan Ukur Failed.");
-
-				}
-				
-			} else {
+//		if(permohonan.getJenis().equals("A")){	
+//			if (getSek4().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update MMK (sek4) Success.");
+//				
+//			} else {
 //				result.setCode("1");
 //				result.setDescription("Failed.");
-				result.setDetail("Date Can't be Empty.");
+//				result.setDetail("Update MMK (sek4) Failed.");
+//				
+//			}
+//		}else if(permohonan.getJenis().equals("B")){
+//			if (getB().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update MMK (sek4) Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update MMK (sek4) Failed.");
+//				
+//			}	
+//		}else if(permohonan.getJenis().equals("C")){
+//			if (getSek8().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//			//if (updateEndorsan(idPermohonan, permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update MMK (sek8) Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update MMK (sek8) Failed.");
+//				
+//			}
+//		}else if(permohonan.getJenis().equals("D")){
+//			if (getD().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//			//if (updateEndorsan(idPermohonan, permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update Borang D Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update Borang D Failed.");
+//				
+//			}
+//
+//		}else if(permohonan.getJenis().equals("K")){
+//			if (getK().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//			//if (updateEndorsan(idPermohonan, permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update Borang K Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update Borang K Failed.");
+//				
+//			}
+//
+//		}else if(permohonan.getJenis().equals("PD")){
+//			if (getPen().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//			//if (updateEndorsan(idPermohonan, permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update Penarikan Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update Penarikan Failed.");
+//				
+//			}
+//
+//		}else if(permohonan.getJenis().equals("S")){
+//			if (getSijil().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//			//if (updateEndorsan(idPermohonan, permohonan)) {
+//				result.setCode("0");
+//				result.setDescription("Success.");
+//				result.setDetail("Update Pengecualian Ukur Success.");
+//				
+//			} else {
+//				result.setCode("1");
+//				result.setDescription("Failed.");
+//				result.setDetail("Update Pengecualian Failed.");
+//				
+//			}
+//
+//		}else if(permohonan.getJenis().equals("PU")){
+//			
+//			result.setCode("1");
+//			result.setDescription("Failed.");
+//			//
+//			if(permohonan.geTarikh()!=null){
+//				
+//				if (getPU().kemaskiniPermohonan(idPermohonan,idTransaksi,permohonan)) {
+//					result.setCode("0");
+//					result.setDescription("Success.");
+//					result.setDetail("Update Permohonan Ukur Success.");
+//				
+//				}else{					
+//					result.setDetail("Update Permohonan Ukur Failed.");
+//
+//				}
+//				
+//			} else {
+////				result.setCode("1");
+////				result.setDescription("Failed.");
+//				result.setDetail("Date Can't be Empty.");
+//
+//			}
 
-			}
-
-		}else {
+	//	}else {
 			result.setCode("1");
 			result.setDescription("Failed.");
 			result.setDetail("Jenis not match.");	
 
-		}
+		//}
 		return result;
 		
 	}

@@ -2,47 +2,42 @@ package myetapp.integrasi.etanah;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+//import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.Hashtable;
-import java.util.Vector;
-
-import lebah.db.Db;
-import lebah.db.SQLRenderer;
+//import java.text.SimpleDateFormat;
 import myetapp.db.DbManager;
 import myetapp.entities.etanah.Dokumen;
 import myetapp.entities.etanah.Hakmilik;
 import myetapp.integrasi.Integration;
 import sun.misc.BASE64Decoder;
 
-import org.apache.log4j.Logger;
+//import org.apache.log4j.Logger;
 
 public class Sek4Bean implements Integration {
-	private static Logger myLog = Logger.getLogger(Sek4Bean.class);
-	private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
+	//private static Logger myLog = Logger.getLogger(Sek4Bean.class);
+	//private static SimpleDateFormat sdf =  new SimpleDateFormat("dd/MM/yyyy");
 	//private Db db = null;
 	private Connection con = null;		
 	private String sql = "";
 	TanahApplicationResponse result = null;
 			
-	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,  Permohonan permohonan) throws Exception {
+	public TanahApplicationResponse semakanPermohonan(String idPermohonan,String transactionID,Permohonan permohonan) throws Exception {
 		result = new TanahApplicationResponse();
 		setResult(result);
 		String noFail = permohonan.getNoFail();
 		String noJilid = permohonan.getNoJilid();
-		String tarikh = permohonan.geTarikh();
+		String tarikh = permohonan.getTarikh();
 //		String keputusan = permohonan.getKeputusan();
 //		String ulasan = permohonan.getCatatan();
 		
 		if (noFail == null || noFail.trim().length() == 0 || noFail.trim().equals("?")) {
-			result.setDetail("File No. Can't be Empty.");
+			result.setDetail("Sila Isi No. Fail.");
 
 		} else if(noJilid == null || noJilid.trim().length() == 0 || noJilid.trim().equals("?")){
-			result.setDetail("Jilid No. Can't be Empty.");
+			result.setDetail("Sila Isi No. Jilid.");
 			
 		}else if(tarikh == null || tarikh.trim().length() == 0 || tarikh.trim().equals("?")){	
-			result.setDetail("Date Can't be Empty.");
+			result.setDetail("Sila Isi Tarikh.");
 		
 //		} else if(keputusan == null || keputusan.trim().length() == 0 || keputusan.trim().equals("?")){
 //			result.setDetail("Keputusan Can't be Empty.");
@@ -118,7 +113,7 @@ public class Sek4Bean implements Integration {
 				}				
 			}
 			
-			kemaskiniPermohonani(idPermohonan,permohonan,stmt);
+			kemaskiniPermohonani(transactionID,permohonan,stmt);
 
 			con.commit();
 			isSucces = true;
@@ -134,40 +129,19 @@ public class Sek4Bean implements Integration {
 		
 	}
 	
-	private String getMMK(String idPermohonan) throws Exception {
-		boolean recordExist = false;
-		Connection con = null;
-		String idMMK = "";
-		try {
-			con = DbManager.getInstance().getConnection();
-			Statement stmt = con.createStatement();
-			String sql = "SELECT ID_MMK FROM tblpptmmk WHERE ID_PERMOHONAN = '" + idPermohonan + "'";
-			ResultSet rs = stmt.executeQuery(sql);
-			if (rs.next()) {
-				recordExist = true;
-				idMMK =rs.getString("ID_MMK");
-			}
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			throw ex;
-		}  finally {
-			if (con != null)
-				con.close();
-		}
-		
-		return idMMK;
-	}
-	
-	public void kemaskiniPermohonani(String idPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
+	public void kemaskiniPermohonani(String noPermohonan,Permohonan permohonan,Statement stmt) throws Exception{
 		 //String tarikhBukafail = "to_date('" + (String)data.get("tarikh_Bukafail") + "','dd/MM/yyyy')";
 
-		sql = "insert into tblintanahppt (tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) values "
-				+" (to_date('"+permohonan.geTarikh()+"','dd/MM/yyyy'),'"+permohonan.getCatatan()+"','A',SYSDATE,SYSDATE) "
-				+"";
+		sql = "insert into tblintanahppt (no_permohonan,tarikh_keputusan,catatan,flag_urusan,tarikh_terima,tarikh_masuk) " +
+				"values ("+
+				" '"+noPermohonan+"'" +
+				" ,to_date('"+permohonan.getTarikh()+"','dd/MM/yyyy')" +
+				" ,'"+permohonan.getCatatan()+"'" +
+				" ,'A',SYSDATE,SYSDATE "+
+				")";
 			stmt.execute(sql);
 
 	}
-	
 	
 	private static void setResult(TanahApplicationResponse result){
 		result.setCode("1");

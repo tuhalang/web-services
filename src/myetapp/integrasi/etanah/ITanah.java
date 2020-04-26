@@ -2,7 +2,6 @@ package myetapp.integrasi.etanah;
 
 import java.sql.Statement;
 
-import myetapp.integrasi.etanah.Permohonan;
 import myetapp.integrasi.etanah.TanahApplicationResponse;
 
 public interface ITanah {

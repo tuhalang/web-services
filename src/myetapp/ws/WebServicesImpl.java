@@ -331,7 +331,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("PU");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -354,7 +354,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("S");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -377,7 +377,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("PD");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -400,7 +400,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("K");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -423,7 +423,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("D");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -446,7 +446,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("M2");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -469,7 +469,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("C");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -492,7 +492,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("B");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
@@ -515,7 +515,7 @@ public class WebServicesImpl implements WebServices {
 		result = new TanahApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
 			permohonan.setJenis("A");
-			result = TanahMelakaManager.kemaskiniBorangA(idPermohonan,permohonan);
+			result = TanahMelakaManager.kemaskiniBorang(idPermohonan,permohonan);
 		} else {
 			result = new TanahApplicationResponse();
 			result.setCode("1");
