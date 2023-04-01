@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Main-Class: myetapp.ws.WebServicesPublisher
+Class-Path: jaxrpc.jar ojdbc6.jar wsdl4j.jar lebah-xe.jar mail-1.4.jar e
+ clipselink.jar log4j-1.2.9.jar ehcache-1.2.3.jar commons-logging.jar co
+ mmons-codec-1.4.0.jar commons-discovery-0.2.jar geronimo-jpa_3.0_spec-1
+ .0.jar mysql-connector-java-3.1.6-bin.jar
+
