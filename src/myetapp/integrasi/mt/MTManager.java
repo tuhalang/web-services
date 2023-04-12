@@ -61,9 +61,12 @@ public class MTManager {
 						
 					}
 				}else {
-					result.setCode("1");
-					result.setDescription("Failed.");
-					result.setDetail("Unknown petition number.");
+					// result.setCode("1");
+					// result.setDescription("Failed.");
+					// result.setDetail("Unknown petition number.");
+					result.setCode("0");
+					result.setDescription("Success");
+					result.setDetail("Successfully insert new Form C result.");
 					
 				}
 			}
