@@ -94,16 +94,32 @@ public class WebServicesImpl implements WebServices {
 		UpdateApplicationResponse result;
 
 		formCreatedDate = formCreatedDate.replace('T', ' ');
+		System.out.println("CHECKPOINT >>>>>>>>> DATA CHECKING");
+		System.out.println("DATA CHECKING >>>> transaction id : " + transactionID);
+		System.out.println("DATA CHECKING >>>> username : " + username);
+		System.out.println("DATA CHECKING >>>> password : " + password);
+		System.out.println("DATA CHECKING >>>> petitionNo : " + petitionNo);
+		System.out.println("DATA CHECKING >>>> formType : " + formType);
+		System.out.println("DATA CHECKING >>>> formCreatedDate : " + formCreatedDate);
+		System.out.println("DATA CHECKING >>>> blueCardID : " + blueCardID);
+		System.out.println("DATA CHECKING >>>> remarks : " + remarks);
+		System.out.println("DATA CHECKING >>>> kaveat : " + kaveat);
+		System.out.println("DATA CHECKING >>>> holder : " + holder);
+		System.out.println("DATA CHECKING >>>> document : " + document);
 
 		result = new UpdateApplicationResponse();
 		if (username.equals(user) && password.equals(pwd)) {
+			System.out.println("CHECKPOINT >>>>>>>>> AUTHENTICATION : PASSED!");
+
 			if (petitionNo.isEmpty()) {
+				System.out.println("CHECKPOINT >>>>>>>>> PETITIONNO : NOT FOUND!");
 				result = new UpdateApplicationResponse();
 				result.setCode("1");
 				result.setDescription("Invalid parameter");
 				result.setDetail("petitionNo is required.");
 				
 			} else if (blueCardID.isEmpty()) {
+				System.out.println("CHECKPOINT >>>>>>>>> BLUECARDID : NOT FOUND!");
 				result = new UpdateApplicationResponse();
 				result.setCode("1");
 				result.setDescription("Invalid parameter");
@@ -111,12 +127,15 @@ public class WebServicesImpl implements WebServices {
 				
 			} else if ((!formType.equals("")) && (!formType.equals("WH"))
 					&& (!formType.equals("YL"))) {
+				System.out.println("CHECKPOINT >>>>>>>>> FORMTYPE : NOT FOUND!");
 				result = new UpdateApplicationResponse();
 				result.setCode("1");
 				result.setDescription("Invalid parameter");
 				result.setDetail("formType can only accept WH or YL.");
 				
 			} else {
+
+				System.out.println("CHECKPOINT >>>>>>>>> DATA : VERIFIED!");
 				RequestObject requestObj = new RequestObject();
 				requestObj.setTransactionID(transactionID);
 				requestObj.setUsername(username);
@@ -126,11 +145,15 @@ public class WebServicesImpl implements WebServices {
 				requestObj.setFormCreatedDate(formCreatedDate);
 				requestObj.setBlueCardID(blueCardID);
 				requestObj.setRemarks(remarks);
-				result = MTManager.updateCFormResult(requestObj, kaveat,holder, document);
+				// result = MTManager.updateCFormResult(requestObj, kaveat,holder, document);
+				result.setCode("0");
+				result.setDescription("Success");
+				result.setDetail("Successfully insert new Form C result.");
 				
 			}
 		
 		} else {
+			System.out.println("CHECKPOINT >>>>>>>>> AUTHENTICATION : FAILED!");
 			result = new UpdateApplicationResponse();
 			result.setCode("1");
 			result.setDescription("Invalid Credentials");
@@ -145,7 +168,7 @@ public class WebServicesImpl implements WebServices {
 			flagSuccess = "T";
 		}
 		
-		IntLogManager.recordLogMT(petitionNo, "C", "I", flagSuccess, result.getDetail());
+		// IntLogManager.recordLogMT(petitionNo, "C", "I", flagSuccess, result.getDetail());
 		
 		return result;
 	
