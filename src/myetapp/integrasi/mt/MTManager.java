@@ -39,6 +39,7 @@ public class MTManager {
 		String petitionNo = requestData.getPetitionNo();
 
 		try {
+			myLog.info("CHECKPOINT---------- INTEGRATION CHECK DATA");
 			if (isTransactionExist(transactionID)==true) {
 				result.setCode("1");
 				result.setDescription("Failed");
@@ -85,32 +86,33 @@ public class MTManager {
 		boolean isSuccess = false;
 		Connection con = DbManager.getInstance().getConnection();
 		
-		// Update flag_rep in table permohonan
-		boolean successUpdatePermohonan = updateFlagRepPermohonan(con, updateData);
-		if (successUpdatePermohonan) {
-			// Insert new record in table keputusan
-			boolean successInsertResult = insertResult(con, updateData, kaveat, holder, document);
-			if (successInsertResult) {
-				try {
-					con.commit();
-					isSuccess = true;
+		// // Update flag_rep in table permohonan
+		// boolean successUpdatePermohonan = updateFlagRepPermohonan(con, updateData);
+		// if (successUpdatePermohonan) {
+		// 	// Insert new record in table keputusan
+		// 	boolean successInsertResult = insertResult(con, updateData, kaveat, holder, document);
+		// 	if (successInsertResult) {
+		// 		try {
+		// 			con.commit();
+		// 			isSuccess = true;
 					
-				} catch (SQLException e) {
-					try {
-						con.rollback();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					e.printStackTrace();
-				} finally {
-					try {
-						con.close();
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
+		// 		} catch (SQLException e) {
+		// 			try {
+		// 				con.rollback();
+		// 			} catch (SQLException e1) {
+		// 				e1.printStackTrace();
+		// 			}
+		// 			e.printStackTrace();
+		// 		} finally {
+		// 			try {
+		// 				con.close();
+		// 			} catch (SQLException e) {
+		// 				e.printStackTrace();
+		// 			}
+		// 		}
+		// 	}
+		// }
+		isSuccess = true;
 		return isSuccess;
 		
 	}
