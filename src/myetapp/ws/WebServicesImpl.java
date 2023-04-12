@@ -126,11 +126,8 @@ public class WebServicesImpl implements WebServices {
 				requestObj.setFormCreatedDate(formCreatedDate);
 				requestObj.setBlueCardID(blueCardID);
 				requestObj.setRemarks(remarks);
-				// result = MTManager.updateCFormResult(requestObj, kaveat,holder, document);
-				result.setCode("0");
-				result.setDescription("Success");
-				result.setDetail("Successfully insert new Form C result.");
-		
+				result = MTManager.updateCFormResult(requestObj, kaveat,holder, document);
+				
 			}
 		
 		} else {

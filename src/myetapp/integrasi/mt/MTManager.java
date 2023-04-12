@@ -38,48 +38,45 @@ public class MTManager {
 		String transactionID = requestData.getTransactionID();
 		String petitionNo = requestData.getPetitionNo();
 
-		// try {
-		// 	myLog.info("CHECKPOINT---------- INTEGRATION CHECK DATA");
-		// 	if (isTransactionExist(transactionID)==true) {
-		// 		result.setCode("1");
-		// 		result.setDescription("Failed");
-		// 		result.setDetail("TransactionID already exist.");
+		try {
+			myLog.info("CHECKPOINT---------- INTEGRATION CHECK DATA");
+			if (isTransactionExist(transactionID)==true) {
+				result.setCode("1");
+				result.setDescription("Failed");
+				result.setDetail("TransactionID already exist.");
 				
-		// 	} else {
-		// 		myLog.info("isTransactionExist("+requestData+",)");
-		// 		//System.out.println("masuk sini");
-		// 		if (isPetitionExist(petitionNo)==true) {	
-		// 			boolean isInsert = insertFormCResult(requestData, kaveat, holder, document);
-		// 			if (isInsert) {
-		// 				result.setCode("0");
-		// 				result.setDescription("Success");
-		// 				result.setDetail("Successfully insert new Form C result.");
+			} else {
+				myLog.info("isTransactionExist("+requestData+",)");
+				//System.out.println("masuk sini");
+				if (isPetitionExist(petitionNo)==true) {	
+					boolean isInsert = insertFormCResult(requestData, kaveat, holder, document);
+					if (isInsert) {
+						result.setCode("0");
+						result.setDescription("Success");
+						result.setDetail("Successfully insert new Form C result.");
 						
-		// 			} else {
-		// 				result.setCode("1");
-		// 				result.setDescription("Failed");
-		// 				result.setDetail("Unable to insert Form C result.");
+					} else {
+						result.setCode("1");
+						result.setDescription("Failed");
+						result.setDetail("Unable to insert Form C result.");
 						
-		// 			}
-		// 		}else {
-		// 			// result.setCode("1");
-		// 			// result.setDescription("Failed.");
-		// 			// result.setDetail("Unknown petition number.");
-		// 			result.setCode("0");
-		// 			result.setDescription("Success");
-		// 			result.setDetail("Successfully insert new Form C result.");
+					}
+				}else {
+					result.setCode("1");
+					result.setDescription("Failed.");
+					result.setDetail("Unknown petition number.");
+					// result.setCode("0");
+					// result.setDescription("Success");
+					// result.setDetail("Successfully insert new Form C result.");
 					
-		// 		}
-		// 	}
-		// } catch (Exception ex) {
-		// 	result.setCode("1");
-		// 	result.setDescription("Failed.");
-		// 	result.setDetail(ex.getMessage());
+				}
+			}
+		} catch (Exception ex) {
+			result.setCode("1");
+			result.setDescription("Failed.");
+			result.setDetail(ex.getMessage());
 			
-		// }
-		result.setCode("0");
-		result.setDescription("Success");
-		result.setDetail("Successfully insert new Form C result.");
+		}
 		return result;
 		
 	}
