@@ -15,6 +15,11 @@
 
     <target name="init">
         <mkdir dir="${build.dir}" />
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="properties">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
     </target>
 
     <!-- external libraries classpath, we don't need sources and javadoc -->
@@ -28,7 +33,10 @@
 
     <!-- To work with external libraries, need classpath to compile -->
     <target name="compile" depends="init" description="compile the source ">
-        <javac includeantruntime="false" srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath" />
+        <javac includeantruntime="false" destdir="${build.dir}" classpathref="classpath" >
+            <src path="src"/>
+            <src path="properties"/>
+        </javac>
     </target>
 
     <!-- constructs the external libraries classpath name -->
