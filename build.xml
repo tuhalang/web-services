@@ -78,5 +78,5 @@
     </target>
 
     <!-- Default, run this -->
-    <target name="main" depends="clean, compile, jar" />
+    <target name="main" depends="clean, compile, jar" /> <!--you can change the name here, any name you want-->
 </project>
