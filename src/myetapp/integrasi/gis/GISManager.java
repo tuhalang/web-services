@@ -12,7 +12,6 @@ import myetapp.db.DbManager;
 import myetapp.entities.gis.RequestObjectGIS;
 import myetapp.entities.gis.Tanah;
 import myetapp.ws.UpdateApplicationResponse;
-
 import org.apache.log4j.Logger;
 
 
@@ -118,37 +117,41 @@ public class GISManager {
 		Tanah[] results = new Tanah[1];
 		Tanah result = null;
 		Vector<Tanah> res = null;
+		myLog.info("request data : " + requestData);
+
 		try {
 			Connection con = DbManager.getInstance().getConnection();			
 			res = getInfo(con,requestData);
-			myLog.info("getListing:res"+res);
-			if(!res.isEmpty())
+			myLog.info("getListing:"+res.size());
+			
+			if(!res.isEmpty()){
 				results = new Tanah[res.size()];
-				myLog.info("getListing:"+res.size());
 				if (res.size()!=0) {
-				for (int i = 0; i < res.size(); i++) {
-					Tanah gis = (Tanah)res.get(i);
-					result = new Tanah();
-					result.setNoFail(gis.getNoFail());
-					result.setKegunaan(gis.getKegunaan());
-					result.setTarikhDaftar(gis.getTarikhDaftar());
-					result.setKodNegeri(gis.getKodNegeri());
-					result.setKodDaerah(gis.getKodDaerah());
-					result.setKodMukim(gis.getKodMukim());
-					result.setKodSeksyen(gis.getKodSeksen());
-					result.setLuas(gis.getLuas());
-					result.setLuasKeterangan(gis.getLuasKeterangan());
-					result.setKodLot(gis.getKodLot());
-					result.setNoLot(gis.getNoLot());
-					result.setJenisHakmilik(gis.getJenisHakmilik());
-					result.setNoHakmilik(gis.getNoHakmilik());
-					//result.setCharter(rs.getInt(17));
-					result.setKodAgensi(gis.getKodAgensi());
-					result.setKodKementerian(gis.getKodKementerian());
-					result.setStatus(gis.getStatus());
-					result.setUPI(gis.getUPI());
-			     	results[i] = result;
-					
+					for (int i = 0; i < res.size(); i++) {
+						Tanah gis = (Tanah)res.get(i);
+						result = new Tanah();
+						result.setNoFail(gis.getNoFail());
+						result.setKegunaan(gis.getKegunaan());
+						result.setTarikhDaftar(gis.getTarikhDaftar());
+						result.setKodNegeri(gis.getKodNegeri());
+						result.setKodDaerah(gis.getKodDaerah());
+						result.setKodMukim(gis.getKodMukim());
+						result.setKodSeksyen(gis.getKodSeksen());
+						result.setLuas(gis.getLuas());
+						result.setLuasKeterangan(gis.getLuasKeterangan());
+						result.setKodLot(gis.getKodLot());
+						result.setNoLot(gis.getNoLot());
+						result.setJenisHakmilik(gis.getJenisHakmilik());
+						result.setNoHakmilik(gis.getNoHakmilik());
+						//result.setCharter(rs.getInt(17));
+						result.setKodAgensi(gis.getKodAgensi());
+						result.setKodKementerian(gis.getKodKementerian());
+						result.setStatus(gis.getStatus());
+						result.setUPI(gis.getUPI());
+						results[i] = result;
+					}
+				}else{
+					myLog.info("res size : 0");
 				}
 				//result.setCode("0");
 				//result.setDescription("Success");
@@ -170,7 +173,7 @@ public class GISManager {
 			result.setDescription("Failed.");
 			result.setDetail("ex:"+ex.getMessage());
 			results[0] = result;
-			
+			myLog.info(ex.getMessage());
 		}
 		return results;
 		

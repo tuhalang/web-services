@@ -23,10 +23,13 @@ import myetapp.integrasi.mt.MTManager;
 import myetapp.integrasi.mt.MTPendaftaran;
 import myetapp.integrasi.mt.RequestObject;
 import myetapp.utils.IntLogManager;
+import org.apache.log4j.Logger;
 
 //Service Implementation
 @WebService(serviceName = "myeTappService", portName = "updateApplication", endpointInterface = "myetapp.ws.WebServices")
 public class WebServicesImpl implements WebServices {
+
+	static Logger myLog = Logger.getLogger("WebServicesImpl");
 	static ResourceBundle rb = ResourceBundle.getBundle("ws");
 	String user = rb.getString("USERNAME");
 	String pwd = rb.getString("PASSWORD");
@@ -228,7 +231,12 @@ public class WebServicesImpl implements WebServices {
 		String password, String createdDate, String remarks) {
 		Tanah[] result_ = new Tanah[1];
 		Tanah result = null;
+		myLog.info("username : " + username);
+		myLog.info("password : " + password);
+		myLog.info("transaction id : " + transactionID);
+
 		if (username.equals(user) && password.equals(pwd)) {
+
 			RequestObjectGIS requestObj = new RequestObjectGIS();
 			requestObj.setTransactionID(transactionID);
 			result_ = GISManager.getListing(requestObj);
@@ -242,7 +250,6 @@ public class WebServicesImpl implements WebServices {
 
 		}
 		return result_;
-	
 	}
 
 	@Override
