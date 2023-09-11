@@ -41,7 +41,7 @@ public class DbManager {
 		try {
 			con.setAutoCommit(false);
 		} catch (SQLException e) {
-			myLogger.info("getConnection: " + e.getMessage());
+			myLogger.info("getConnection2: " + e.getMessage());
 			e.printStackTrace();
 		}
 		return con;
