@@ -270,12 +270,14 @@ public class GISManager {
 			sql += " WHERE LATITUDE = 'TIADA'";
 	   		myLog.info("getSQLSelect >>> VGIS SENARAI CHARTING and latitude : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
+	   		myLog.info("Execute sukses.");
+
 			//ResultSet rs = stmt.executeQuery(sql);
 			//RequestObjectGIS gisData = null;
 			Tanah mt = null;
+
 			while(rs.next()) {
 				int i=1;
-				//myLog.info("i="+i++);
 				//gisData = new RequestObjectGIS();
 				mt = new Tanah();
 				mt.setNoFail(rs.getString("NO_FAIL"));
@@ -306,9 +308,10 @@ public class GISManager {
 			stmt.close();	
 			
 		} catch (SQLException e) {
-			myLog.debug("insertResult: " + e.getMessage());
+			myLog.debug("insertResult : " + e.getMessage());
 			e.printStackTrace();
 		} 
+		myLog.info("DATA VECTOR : " + vec);
 		return vec;
 		
 	}
