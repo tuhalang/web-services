@@ -119,10 +119,12 @@ public class GISManager {
 		Tanah[] results = new Tanah[1];
 		Tanah result = null;
 		Vector<Tanah> res = null;
+		Connection con = DbManager.getInstance().getConnection();
+
 		myLog.info("request data : " + requestData);
+		myLog.info("Connection init : " + con);
 
 		try {
-			Connection con = DbManager.getInstance().getConnection();			
 			res = getInfo(con,requestData);
 			myLog.info("getListing:"+res.size());
 			
