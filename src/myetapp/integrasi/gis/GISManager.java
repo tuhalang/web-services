@@ -276,8 +276,10 @@ public class GISManager {
 			//RequestObjectGIS gisData = null;
 			Tanah mt = null;
 
+			myLog.info("accessing loop...");
 			while(rs.next()) {
 				int i=1;
+				myLog.info("i : " + i++);
 				//gisData = new RequestObjectGIS();
 				mt = new Tanah();
 				mt.setNoFail(rs.getString("NO_FAIL"));
