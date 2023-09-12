@@ -19,8 +19,10 @@ import org.apache.log4j.Logger;
 //import ekptg.helpers.DB;
 
 public class GISManager {
+
 	static Logger myLog = Logger.getLogger(" myetapp.integrasi.gis.GISManager");
 	private static UpdateApplicationResponse result = null;
+	
 	/**
 	 * Kemaskini maklumat latitude,longLatitude
 	 * 
@@ -173,7 +175,7 @@ public class GISManager {
 			result.setDescription("Failed.");
 			result.setDetail("ex:"+ex.getMessage());
 			results[0] = result;
-			myLog.info(ex.getMessage());
+			myLog.info("error : " + ex.getMessage());
 		}
 		return results;
 		
