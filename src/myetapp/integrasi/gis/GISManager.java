@@ -119,12 +119,10 @@ public class GISManager {
 		Tanah[] results = new Tanah[1];
 		Tanah result = null;
 		Vector<Tanah> res = null;
-		Connection con = DbManager.getInstance().getConnection();
-
 		myLog.info("request data : " + requestData);
-		myLog.info("Connection init : " + con);
 
-		try {
+		try {	
+			Connection con = DbManager.getInstance().getConnection();
 			res = getInfo(con,requestData);
 			myLog.info("getListing:"+res.size());
 			
@@ -264,12 +262,14 @@ public class GISManager {
 	  	r.add("UPI");	  	
 	  	//r.add("KETERANGAN_STATUSTANAH");	  	
 	    String sql = r.getSQLSelect("VGIS_SENARAI_CHARTING ");
-	   	//myLog.info("getSQLSelect: sql = " + sql);
-  	
+	   	myLog.info("getSQLSelect >>> VGIS SENARAI CHARTING : " + sql);
   		Statement stmt;
+		
 		try {
 			stmt = con.createStatement();
-			ResultSet rs = stmt.executeQuery(sql + " WHERE LATITUDE = 'TIADA'");
+			sql += " WHERE LATITUDE = 'TIADA'";
+	   		myLog.info("getSQLSelect >>> VGIS SENARAI CHARTING and latitude : " + sql);
+			ResultSet rs = stmt.executeQuery(sql);
 			//ResultSet rs = stmt.executeQuery(sql);
 			//RequestObjectGIS gisData = null;
 			Tanah mt = null;
