@@ -176,6 +176,7 @@ public class GISManager {
 			result.setDetail("ex:"+ex.getMessage());
 			results[0] = result;
 			myLog.info("error : " + ex.getMessage());
+			ex.printStackTrace();
 		}
 		return results;
 		
