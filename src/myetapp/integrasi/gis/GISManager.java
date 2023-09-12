@@ -277,10 +277,10 @@ public class GISManager {
 			Tanah mt = null;
 
 			myLog.info("accessing loop...");
+			int i=1;
 
 			while(rs.next()) {
-				int i=1;
-				myLog.info("i : " + i++);
+				myLog.info("i : " + i);
 				//gisData = new RequestObjectGIS();
 				mt = new Tanah();
 				mt.setNoFail(rs.getString("NO_FAIL"));
@@ -306,9 +306,11 @@ public class GISManager {
 				mt.setUPI(rs.getString("UPI"));
 				//myLog.info("STATUS_TANAH="+rs.getString("STATUS_TANAH"));
 				vec.addElement(mt);
-	
+				i++;
 			}
+			myLog.info("exit loop...");
 			stmt.close();	
+			myLog.info("statement closed...");
 			
 		} catch (SQLException e) {
 			myLog.debug("insertResult : " + e.getMessage());
