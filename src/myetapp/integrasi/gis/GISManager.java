@@ -271,12 +271,13 @@ public class GISManager {
 	   		myLog.info("getSQLSelect >>> VGIS SENARAI CHARTING and latitude : " + sql);
 			ResultSet rs = stmt.executeQuery(sql);
 	   		myLog.info("Execute sukses.");
-
-			//ResultSet rs = stmt.executeQuery(sql);
+	   		// myLog.info("rs size : " +  rs.length());
+	   		myLog.info("rs data : " +  rs);
 			//RequestObjectGIS gisData = null;
 			Tanah mt = null;
 
 			myLog.info("accessing loop...");
+
 			while(rs.next()) {
 				int i=1;
 				myLog.info("i : " + i++);
