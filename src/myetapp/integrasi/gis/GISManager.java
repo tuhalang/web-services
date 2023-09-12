@@ -278,11 +278,12 @@ public class GISManager {
 
 			myLog.info("accessing loop...");
 			int i=1;
+			String nofail = "";
 
 			while(rs.next()) {
-				myLog.info("i : " + i);
 				//gisData = new RequestObjectGIS();
 				mt = new Tanah();
+				nofail = rs.getString("NO_FAIL");
 				mt.setNoFail(rs.getString("NO_FAIL"));
 				mt.setKegunaan(rs.getString("TUJUAN"));
 				mt.setTarikhDaftar(rs.getString("TARIKH_DAFTAR").equals("")?rs.getString(3):sdf.format(rs.getDate("TARIKH_DAFTAR")));
@@ -306,6 +307,7 @@ public class GISManager {
 				mt.setUPI(rs.getString("UPI"));
 				//myLog.info("STATUS_TANAH="+rs.getString("STATUS_TANAH"));
 				vec.addElement(mt);
+				myLog.info("i : " + i + " || no fail : " + nofail);
 				i++;
 			}
 			myLog.info("exit loop...");
